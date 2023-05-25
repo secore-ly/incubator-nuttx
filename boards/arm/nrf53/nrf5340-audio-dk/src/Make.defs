@@ -1,5 +1,5 @@
 ############################################################################
-# boards/arm/nrf52/nrf52840-dongle/src/Makefile
+# boards/arm/nrf53/nrf5340-audio-dk/src/Make.defs
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -20,16 +20,18 @@
 
 include $(TOPDIR)/Make.defs
 
-CSRCS = nrf52_boot.c nrf52_bringup.c
+CSRCS = nrf53_boot.c nrf53_bringup.c
 
 ifeq ($(CONFIG_BOARDCTL),y)
-CSRCS += nrf52_appinit.c
+CSRCS += nrf53_appinit.c
 endif
 
 ifeq ($(CONFIG_ARCH_LEDS),y)
-CSRCS += nrf52_autoleds.c
+CSRCS += nrf53_autoleds.c
 else
-CSRCS += nrf52_userleds.c
+CSRCS += nrf53_userleds.c
 endif
 
-include $(TOPDIR)/boards/Board.mk
+DEPPATH += --dep-path board
+VPATH += :board
+CFLAGS += $(shell $(INCDIR) "$(CC)" $(TOPDIR)$(DELIM)arch$(DELIM)$(CONFIG_ARCH)$(DELIM)src$(DELIM)board$(DELIM)board)
